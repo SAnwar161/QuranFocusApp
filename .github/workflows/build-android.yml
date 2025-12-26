@@ -32,8 +32,8 @@ jobs:
 
       - name: 🔑 Set up environment variables
         run: |
-          echo "EXPO_PUBLIC_GROQ_API_KEY=${{ secrets.GROQ_API_KEY }}" >> $GITHUB_ENV
-          echo "EXPO_PUBLIC_HF_API_KEY=${{ secrets.HF_API_KEY }}" >> $GITHUB_ENV
+          echo "EXPO_PUBLIC_GROQ_API_KEY=${{ secrets.GF_QURANFOCUS }}" >> $GITHUB_ENV
+          echo "EXPO_PUBLIC_HF_API_KEY=${{ secrets.HF_QuranFOCUS }}" >> $GITHUB_ENV
 
       - name: 🏗️ Build Android AAB
         run: eas build --platform android --non-interactive --profile production
