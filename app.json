@@ -2,11 +2,11 @@
   "expo": {
     "name": "QuranFocusApp",
     "slug": "QuranFocusApp",
-    "version": "1.0.0",
+    "version": "1.3.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -16,9 +16,10 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.sadat161.quranfocus",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       },
       "edgeToEdgeEnabled": true
     },
@@ -27,6 +28,12 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f9a5851f-92df-466a-ab3b-9039a963a4ed"
+      }
+    },
+    "owner": "sadat161"
   }
 }

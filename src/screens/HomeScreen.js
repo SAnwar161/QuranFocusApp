@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, TextInput, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, TextInput, Modal, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS, SPACING } from '../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,7 +28,11 @@ const HomeScreen = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView
+            style={styles.scrollContainer}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+        >
             <View style={styles.header}>
                 <Image
                     source={require('../../assets/logo.png')}
@@ -45,11 +49,19 @@ const HomeScreen = () => {
                     onPress={() => navigation.navigate('Focus', { initialReference: null })}
                     style={{ width: '100%' }}
                 />
+                <Text style={styles.hintText}>Idle for 30s to auto-start Focus</Text>
 
                 <MenuButton
                     title="Search Ayat (e.g. 2:255)"
                     icon="search"
                     onPress={() => setSearchVisible(true)}
+                    style={{ width: '100%' }}
+                />
+
+                <MenuButton
+                    title="Read Al-Quran"
+                    icon="book-outline"
+                    onPress={() => navigation.navigate('Read')}
                     style={{ width: '100%' }}
                 />
 
@@ -73,12 +85,6 @@ const HomeScreen = () => {
                     onPress={() => navigation.navigate('Settings')}
                     style={{ width: '100%' }}
                 />
-            </View>
-
-            <View style={styles.footer}>
-                <Text style={styles.footerText}>
-                    "Idle for 30s to auto-start Focus"
-                </Text>
             </View>
 
             {/* Search Modal */}
@@ -113,16 +119,20 @@ const HomeScreen = () => {
                     </View>
                 </TouchableOpacity>
             </Modal>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    scrollContainer: {
         flex: 1,
         backgroundColor: COLORS.background,
+    },
+    scrollContent: {
+        flexGrow: 1,
         justifyContent: 'center',
         padding: SPACING.lg,
+        paddingBottom: SPACING.xl,
     },
     header: {
         alignItems: 'center',
@@ -180,14 +190,12 @@ const styles = StyleSheet.create({
     primaryButtonText: {
         color: "#000000", // High contrast Black
     },
-    footer: {
-        position: 'absolute',
-        bottom: 40,
-        alignSelf: 'center',
-    },
-    footerText: {
+    hintText: {
         color: COLORS.textDim,
         fontSize: 12,
+        textAlign: 'center',
+        marginTop: -SPACING.sm,
+        marginBottom: SPACING.sm,
     },
     modalOverlay: {
         flex: 1,

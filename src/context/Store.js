@@ -9,8 +9,9 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
     const [settings, setSettings] = useState({
         theme: 'dark',
-        translation: 'en.asad',
+        translation: 'en.sahih',
         notifications: true,
+        rotationInterval: 60, // seconds - default 60s for better reflection time
     });
 
     const [stats, setStats] = useState({
@@ -31,7 +32,14 @@ export const AppProvider = ({ children }) => {
         const init = async () => {
             try {
                 const savedSettings = await getSettings();
-                if (savedSettings) setSettings(savedSettings);
+                if (savedSettings) {
+                    // Migration: Update old 30s default to new 60s default
+                    if (savedSettings.rotationInterval === 30) {
+                        savedSettings.rotationInterval = 60;
+                        await saveSettings(savedSettings);
+                    }
+                    setSettings(savedSettings);
+                }
 
                 const savedStats = await getStats();
                 if (savedStats) setStats(savedStats);

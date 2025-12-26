@@ -56,6 +56,19 @@ const SettingsScreen = () => {
                         value={settings.notifications}
                         onValueChange={toggleNotification}
                     />
+
+                    <View style={styles.divider} />
+
+                    <TouchableOpacity
+                        style={styles.dropdownRow}
+                        onPress={() => navigation.navigate('Schedule')}
+                    >
+                        <View>
+                            <Text style={styles.settingLabel}>Schedule Reminders</Text>
+                            <Text style={styles.subLabel}>Set daily Focus Mode times</Text>
+                        </View>
+                        <Ionicons name="chevron-forward" size={20} color={COLORS.textDim} />
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.section}>
@@ -72,6 +85,34 @@ const SettingsScreen = () => {
                             <Ionicons name="chevron-forward" size={20} color={COLORS.textDim} />
                         </View>
                     </TouchableOpacity>
+
+                    <View style={styles.divider} />
+
+                    <View style={styles.dropdownRow}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.settingLabel}>Auto-Rotate Timer</Text>
+                            <Text style={styles.subLabel}>How fast ayats change</Text>
+                        </View>
+                        <View style={styles.timerOptions}>
+                            {[30, 60, 90, 120].map(seconds => (
+                                <TouchableOpacity
+                                    key={seconds}
+                                    style={[
+                                        styles.timerOption,
+                                        settings.rotationInterval === seconds && styles.timerOptionActive
+                                    ]}
+                                    onPress={() => setSettings(prev => ({ ...prev, rotationInterval: seconds }))}
+                                >
+                                    <Text style={[
+                                        styles.timerOptionText,
+                                        settings.rotationInterval === seconds && styles.timerOptionTextActive
+                                    ]}>
+                                        {seconds}s
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </View>
                 </View>
 
                 <View style={styles.section}>
@@ -212,6 +253,35 @@ const styles = StyleSheet.create({
     valueText: {
         color: COLORS.accent,
         fontSize: 14,
+    },
+    divider: {
+        height: 1,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        marginVertical: SPACING.md,
+    },
+    timerOptions: {
+        flexDirection: 'row',
+        gap: 8,
+    },
+    timerOption: {
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: COLORS.textDim,
+        backgroundColor: 'transparent',
+    },
+    timerOptionActive: {
+        backgroundColor: COLORS.primary,
+        borderColor: COLORS.primary,
+    },
+    timerOptionText: {
+        color: COLORS.textDim,
+        fontSize: 13,
+        fontWeight: '600',
+    },
+    timerOptionTextActive: {
+        color: '#000000',
     },
     aboutBox: {
         marginTop: SPACING.xl,

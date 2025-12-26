@@ -4,7 +4,7 @@ import { COLORS, FONTS, SPACING } from '../constants/theme';
 
 const { height } = Dimensions.get('window');
 
-const AyatCard = ({ ayat, translation, fontSize = 28 }) => {
+const AyatCard = ({ ayat, translation, reflection, fontSize = 28, forCapture = false }) => {
     if (!ayat || !ayat.text) return null;
 
     // Simple heuristic for font scaling
@@ -22,45 +22,63 @@ const AyatCard = ({ ayat, translation, fontSize = 28 }) => {
     // Arabic needs generous line height. Usually 1.5x to 2.0x the font size.
     let dynamicLineHeight = dynamicFontSize * 1.7;
 
+    const content = (
+        <>
+            <View style={styles.arabicContainer}>
+                <Text style={[
+                    styles.arabicText,
+                    { fontSize: dynamicFontSize, lineHeight: dynamicLineHeight }
+                ]}>
+                    {ayat.text}
+                </Text>
+            </View>
+
+            {translation && (
+                <View style={styles.translationContainer}>
+                    <Text style={[styles.translationText, { fontSize: fontSize * 0.6 }]}>
+                        {translation.text}
+                    </Text>
+                </View>
+            )}
+
+            {reflection && (
+                <View style={styles.reflectionContainer}>
+                    <Text style={styles.reflectionText}>{reflection}</Text>
+                </View>
+            )}
+
+            <View style={styles.brandingFooter}>
+                <Image
+                    source={require('../../assets/logo.png')}
+                    style={styles.brandingLogo}
+                    resizeMode="contain"
+                />
+            </View>
+        </>
+    );
+
     return (
-        <View style={styles.card}>
+        <View style={[styles.card, forCapture && styles.cardForCapture]}>
             <View style={styles.header}>
                 <Text style={styles.surahInfo}>
                     {ayat.surah ? `${ayat.surah.englishName} (${ayat.surah.number}:${ayat.numberInSurah})` : ''}
                 </Text>
             </View>
 
-            <ScrollView
-                showsVerticalScrollIndicator={true}
-                persistentScrollbar={true}
-                indicatorStyle="white"
-                contentContainerStyle={styles.scrollContent}
-            >
-                <View style={styles.arabicContainer}>
-                    <Text style={[
-                        styles.arabicText,
-                        { fontSize: dynamicFontSize, lineHeight: dynamicLineHeight }
-                    ]}>
-                        {ayat.text}
-                    </Text>
+            {forCapture ? (
+                <View style={styles.scrollContent}>
+                    {content}
                 </View>
-
-                {translation && (
-                    <View style={styles.translationContainer}>
-                        <Text style={[styles.translationText, { fontSize: fontSize * 0.6 }]}>
-                            {translation.text}
-                        </Text>
-                    </View>
-                )}
-
-                <View style={styles.brandingFooter}>
-                    <Image
-                        source={require('../../assets/logo.png')}
-                        style={styles.brandingLogo}
-                        resizeMode="contain"
-                    />
-                </View>
-            </ScrollView>
+            ) : (
+                <ScrollView
+                    showsVerticalScrollIndicator={true}
+                    persistentScrollbar={true}
+                    indicatorStyle="white"
+                    contentContainerStyle={styles.scrollContent}
+                >
+                    {content}
+                </ScrollView>
+            )}
         </View>
     );
 };
@@ -74,7 +92,7 @@ const styles = StyleSheet.create({
         marginHorizontal: SPACING.md,
         width: '90%',
         alignSelf: 'center',
-        maxHeight: height * 0.95, // Further maximized
+        maxHeight: height * 0.97, // Near absolute maximum
         // Attractive Card styling
         borderWidth: 2,
         borderColor: COLORS.primary,
@@ -84,6 +102,11 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 8,
         flex: 1,
+    },
+    cardForCapture: {
+        maxHeight: 'none', // Remove height constraint for capture
+        flex: 0, // Don't flex for capture
+        minHeight: 400, // Minimum height for capture
     },
     scrollContent: {
         paddingBottom: SPACING.md,
@@ -130,6 +153,7 @@ const styles = StyleSheet.create({
         // Let's add specific web-style font family if platform is web
         ...Platform.select({
             web: { fontFamily: 'Amiri, Georgia, "Times New Roman", serif' },
+            android: { fontFamily: FONTS.arabic, textBreakStrategy: 'simple' },
             default: { fontFamily: FONTS.arabic },
         }),
         textAlign: 'center',
@@ -145,6 +169,21 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontStyle: 'italic',
         lineHeight: 24,
+    },
+    reflectionContainer: {
+        marginTop: SPACING.lg,
+        paddingTop: SPACING.md,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(212, 175, 55, 0.3)',
+        paddingHorizontal: SPACING.sm,
+    },
+    reflectionText: {
+        color: COLORS.accent,
+        textAlign: 'center',
+        fontStyle: 'italic',
+        fontSize: 15,
+        lineHeight: 22,
+        fontWeight: '500',
     },
 });
 

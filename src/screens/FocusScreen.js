@@ -6,6 +6,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import ViewShot from "react-native-view-shot";
 import * as Sharing from 'expo-sharing';
 import { getRandomAyah, getAyah, getTafsir } from '../api/alquran';
+import { generateReflectionQuestion } from '../services/geminiService';
+import { getReflection, saveReflection, saveBookmark, removeBookmark, isBookmarked } from '../services/storage';
 import AyatCard from '../components/AyatCard';
 import AudioControls from '../components/AudioControls';
 import { COLORS, SPACING } from '../constants/theme';
@@ -21,44 +23,102 @@ const FocusScreen = () => {
 
     const [currentAyah, setCurrentAyah] = useState(null);
     const [shareVisible, setShareVisible] = useState(false);
+    const [countdown, setCountdown] = useState(settings.rotationInterval || 30);
+    const [reflection, setReflection] = useState('');
+    const [bookmarked, setBookmarked] = useState(false);
     const rotationTimerRef = useRef(null);
+    const countdownTimerRef = useRef(null);
 
     const fetchAyah = async (reference = null) => {
-        const lang = settings.translation || 'en.asad';
+        const lang = settings.translation || 'en.sahih';
         // If reference is provided (e.g. "2:255"), use getAyah, otherwise getRandomAyah
         const ayah = reference
-            ? await getAyah(reference, ['quran-uthmani', lang, 'ar.alafasy'])
+            ? await getAyah(reference, ['quran-simple', lang, 'ar.alafasy'])
             : await getRandomAyah(lang);
 
         if (ayah) {
             setCurrentAyah(ayah);
             updateStats('seen');
+
+            // Check if bookmarked
+            checkBookmarkStatus(ayah);
+
+            // Fetch reflection question
+            fetchReflectionQuestion(ayah);
         } else {
             // Error handling or fallback if search fails
             if (reference) alert("Ayah not found. Please try 'Surah:Ayah' (e.g. 2:255)");
         }
     };
 
+    const checkBookmarkStatus = async (ayah) => {
+        const surahNumber = ayah.surah.number;
+        const ayatNumber = ayah.numberInSurah;
+        const isMarked = await isBookmarked(surahNumber, ayatNumber);
+        setBookmarked(isMarked);
+    };
+
+    const handleBookmarkToggle = async () => {
+        if (!currentAyah) return;
+
+        const surahNumber = currentAyah.surah.number;
+        const ayatNumber = currentAyah.numberInSurah;
+
+        if (bookmarked) {
+            await removeBookmark(surahNumber, ayatNumber);
+            setBookmarked(false);
+        } else {
+            await saveBookmark(surahNumber, ayatNumber);
+            setBookmarked(true);
+        }
+    };
+
+    const fetchReflectionQuestion = async (ayah) => {
+        // Check cache first
+        const cached = await getReflection(ayah.number);
+        if (cached) {
+            setReflection(cached);
+            return;
+        }
+
+        // Generate new question
+        const translation = ayah.translation ? ayah.translation.text : ayah.text;
+        const question = await generateReflectionQuestion(ayah.text, translation);
+        setReflection(question);
+
+        // Cache it
+        await saveReflection(ayah.number, question);
+    };
+
     useEffect(() => {
         // If passed via navigation (Search)
         if (route.params?.initialReference) {
             fetchAyah(route.params.initialReference);
-            // Don't auto-rotate if user specifically searched for one? 
-            // Or maybe delay rotation. let's pause rotation for searched items for now to let them focus.
+            // Don't auto-rotate if user specifically searched for one
             return;
         }
 
         fetchAyah();
 
-        // Auto-rotate every 2 minutes (120000 ms) only for random mode
+        const intervalMs = (settings.rotationInterval || 60) * 1000;
+        setCountdown(settings.rotationInterval || 60);
+
+        // Auto-rotate based on user setting
         rotationTimerRef.current = setInterval(() => {
             fetchAyah();
-        }, 120000);
+            setCountdown(settings.rotationInterval || 60);
+        }, intervalMs);
+
+        // Countdown ticker (updates every second)
+        countdownTimerRef.current = setInterval(() => {
+            setCountdown(prev => prev > 0 ? prev - 1 : settings.rotationInterval || 60);
+        }, 1000);
 
         return () => {
             if (rotationTimerRef.current) clearInterval(rotationTimerRef.current);
+            if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
         };
-    }, [settings.translation, route.params]); // Depend on route.params to refetch if params change
+    }, [settings.translation, settings.rotationInterval, route.params]);
 
     // Track time spent in focus mode
     useEffect(() => {
@@ -133,32 +193,75 @@ const FocusScreen = () => {
             <View style={styles.content}>
                 {currentAyah ? (
                     <>
-                        {/* Wrap AyatCard in ViewShot for capture */}
-                        <ViewShot
-                            ref={viewShotRef}
-                            options={{ format: "jpg", quality: 0.9 }}
-                            style={{ width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 40 }}
-                        >
+                        {/* Hidden view for full content capture */}
+                        <View style={styles.hiddenCaptureView}>
+                            <ViewShot
+                                ref={viewShotRef}
+                                options={{ format: "jpg", quality: 0.9 }}
+                            >
+                                <AyatCard
+                                    ayat={currentAyah}
+                                    translation={currentAyah.translation}
+                                    reflection={reflection}
+                                    forCapture={true}
+                                />
+                            </ViewShot>
+                        </View>
+
+                        {/* Main display view */}
+                        <View style={{ width: '100%', flex: 1, alignItems: 'center', justifyContent: 'center', marginBottom: 5 }}>
                             <AyatCard
                                 ayat={currentAyah}
                                 translation={currentAyah.translation}
+                                reflection={reflection}
                             />
-                        </ViewShot>
-                        {/* Key forces remount on ayah change, stopping previous audio */}
-                        <AudioControls
-                            key={currentAyah.number}
-                            audioUrl={currentAyah.audio}
-                            onTafsirPress={handleTafsir}
-                        />
+                        </View>
+
+                        {/* Compact Controls Row */}
+                        <View style={styles.controlsRow}>
+                            {/* Audio Controls */}
+                            <AudioControls
+                                key={currentAyah.number}
+                                audioUrl={currentAyah.audio}
+                                onTafsirPress={handleTafsir}
+                            />
+
+                            {/* Bookmark Button */}
+                            <TouchableOpacity
+                                style={styles.bookmarkButtonCompact}
+                                onPress={handleBookmarkToggle}
+                            >
+                                <Ionicons
+                                    name={bookmarked ? "star" : "star-outline"}
+                                    size={24}
+                                    color={COLORS.accent}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* Countdown Timer Display */}
+                        {!route.params?.initialReference && (
+                            <View style={styles.countdownContainer}>
+                                <Ionicons name="time-outline" size={16} color={COLORS.accent} />
+                                <Text style={styles.countdownText}>
+                                    Next in {countdown}s
+                                </Text>
+                            </View>
+                        )}
                     </>
                 ) : (
                     <Text style={styles.loadingText}>Reflecting...</Text>
                 )}
             </View>
 
-            <TouchableOpacity style={styles.nextBtn} onPress={() => fetchAyah()}>
+
+            <TouchableOpacity style={styles.nextBtn} onPress={() => {
+                fetchAyah();
+                setCountdown(settings.rotationInterval || 60);
+            }}>
                 <Text style={styles.nextText}>Next Ayat</Text>
             </TouchableOpacity>
+
 
             <Modal
                 animationType="slide"
@@ -242,10 +345,28 @@ const styles = StyleSheet.create({
         // marginBottom: 50, 
         // paddingBottom: 20, // Removed to allow full stretch
     },
+    hiddenCaptureView: {
+        position: 'absolute',
+        left: -9999, // Position offscreen
+        width: 400, // Fixed width for capture
+    },
     loadingText: {
         color: COLORS.accent,
         textAlign: 'center',
         fontSize: 18,
+    },
+    countdownContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        marginTop: SPACING.md,
+        paddingVertical: SPACING.sm,
+    },
+    countdownText: {
+        color: COLORS.accent,
+        fontSize: 14,
+        fontWeight: '600',
     },
     nextBtn: {
         marginBottom: 50,
@@ -301,6 +422,42 @@ const styles = StyleSheet.create({
         color: COLORS.textDim,
         fontSize: 11,
         marginTop: 4,
+    },
+    controlsRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 12,
+        marginTop: 4, // Minimal spacing for maximum card size
+    },
+    bookmarkButtonCompact: {
+        backgroundColor: COLORS.primary,
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        alignItems: 'center',
+        justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        elevation: 4,
+    },
+    bookmarkButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        paddingVertical: SPACING.sm,
+        paddingHorizontal: SPACING.md,
+        borderRadius: 20,
+        marginTop: SPACING.md, // Reduced to md for compact layout
+        gap: 8,
+    },
+    bookmarkText: {
+        color: COLORS.accent,
+        fontSize: 14,
+        fontWeight: '600',
     },
     divider: {
         height: 1,
