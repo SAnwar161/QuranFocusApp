@@ -40,3 +40,9 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# API Keys and Secrets - NEVER COMMIT THESE
+*.docx
+*[Kk]ey*
+*[Ss]ecret*
+*[Aa]pi*[Kk]ey*
