@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Linking, TextInput, Mo
 import { useNavigation } from '@react-navigation/native';
 import { COLORS, SPACING } from '../constants/theme';
 import { Ionicons } from '@expo/vector-icons';
+import IslamicDateBanner from '../components/IslamicDateBanner';
 
 const MenuButton = ({ title, icon, onPress, primary = false, style }) => (
     <TouchableOpacity
@@ -33,6 +34,8 @@ const HomeScreen = () => {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
         >
+            <IslamicDateBanner />
+
             <View style={styles.header}>
                 <Image
                     source={require('../../assets/logo.png')}

@@ -10,6 +10,8 @@ export const AppProvider = ({ children }) => {
     const [settings, setSettings] = useState({
         theme: 'dark',
         translation: 'en.sahih',
+        reciter: 'ar.alafasy',
+        tafsir: 'ur-tafsir-bayan-ul-quran',
         notifications: true,
         rotationInterval: 60, // seconds - default 60s for better reflection time
     });

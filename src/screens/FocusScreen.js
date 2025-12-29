@@ -31,10 +31,11 @@ const FocusScreen = () => {
 
     const fetchAyah = async (reference = null) => {
         const lang = settings.translation || 'en.sahih';
+        const reciter = settings.reciter || 'ar.alafasy';
         // If reference is provided (e.g. "2:255"), use getAyah, otherwise getRandomAyah
         const ayah = reference
-            ? await getAyah(reference, ['quran-simple', lang, 'ar.alafasy'])
-            : await getRandomAyah(lang);
+            ? await getAyah(reference, ['quran-simple', lang, reciter])
+            : await getRandomAyah(lang, reciter);
 
         if (ayah) {
             setCurrentAyah(ayah);
@@ -118,7 +119,7 @@ const FocusScreen = () => {
             if (rotationTimerRef.current) clearInterval(rotationTimerRef.current);
             if (countdownTimerRef.current) clearInterval(countdownTimerRef.current);
         };
-    }, [settings.translation, settings.rotationInterval, route.params]);
+    }, [settings.translation, settings.rotationInterval, settings.reciter, route.params]);
 
     // Track time spent in focus mode
     useEffect(() => {
@@ -174,9 +175,8 @@ const FocusScreen = () => {
 
     const handleTafsir = () => {
         if (!currentAyah) return;
-        // Open Quran.com Tafsirs for the specific Ayah
-        const url = `https://quran.com/${currentAyah.surah.number}/${currentAyah.numberInSurah}/tafsirs`;
-        Linking.openURL(url).catch(err => console.error("Couldn't load page", err));
+        // Navigate to in-app TafsirScreen
+        navigation.navigate('Tafsir', { ayat: currentAyah });
     };
 
     return (

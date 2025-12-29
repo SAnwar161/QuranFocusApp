@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { useApp } from '../context/Store';
 import { COLORS, SPACING } from '../constants/theme';
 import { LANGUAGES } from '../constants/languages';
+import { RECITERS } from '../constants/reciters';
+import { TAFSIR_EDITIONS } from '../constants/tafsir';
 
 const SettingItem = ({ label, value, onValueChange, type = 'switch' }) => (
     <View style={styles.settingRow}>
@@ -25,6 +27,8 @@ const SettingsScreen = () => {
     const navigation = useNavigation();
     const { settings, setSettings } = useApp();
     const [modalVisible, setModalVisible] = useState(false);
+    const [reciterModalVisible, setReciterModalVisible] = useState(false);
+    const [tafsirModalVisible, setTafsirModalVisible] = useState(false);
 
     const toggleNotification = (val) => {
         setSettings(prev => ({ ...prev, notifications: val }));
@@ -35,11 +39,23 @@ const SettingsScreen = () => {
         setModalVisible(false);
     };
 
+    const selectReciter = (reciterId) => {
+        setSettings(prev => ({ ...prev, reciter: reciterId }));
+        setReciterModalVisible(false);
+    };
+
+    const selectTafsir = (tafsirId) => {
+        setSettings(prev => ({ ...prev, tafsir: tafsirId }));
+        setTafsirModalVisible(false);
+    };
+
     const handleFeedback = () => {
         Linking.openURL('https://www.facebook.com/profile.php?id=61584998726486');
     };
 
     const currentLabels = LANGUAGES.find(l => l.id === settings.translation) || LANGUAGES[0];
+    const currentReciter = RECITERS.find(r => r.id === settings.reciter) || RECITERS[0];
+    const currentTafsir = TAFSIR_EDITIONS.find(t => t.id === settings.tafsir) || TAFSIR_EDITIONS[0];
 
     return (
         <View style={styles.container}>
@@ -81,6 +97,36 @@ const SettingsScreen = () => {
                         <View style={styles.valueContainer}>
                             <Text style={styles.valueText}>
                                 {currentLabels.label}
+                            </Text>
+                            <Ionicons name="chevron-forward" size={20} color={COLORS.textDim} />
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.divider} />
+
+                    <TouchableOpacity style={styles.dropdownRow} onPress={() => setReciterModalVisible(true)}>
+                        <View>
+                            <Text style={styles.settingLabel}>Quran Reciter</Text>
+                            <Text style={styles.subLabel}>Select Tilawat voice</Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                            <Text style={styles.valueText}>
+                                {currentReciter.name}
+                            </Text>
+                            <Ionicons name="chevron-forward" size={20} color={COLORS.textDim} />
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.divider} />
+
+                    <TouchableOpacity style={styles.dropdownRow} onPress={() => setTafsirModalVisible(true)}>
+                        <View>
+                            <Text style={styles.settingLabel}>Tafsir Edition</Text>
+                            <Text style={styles.subLabel}>Select commentary language</Text>
+                        </View>
+                        <View style={styles.valueContainer}>
+                            <Text style={styles.valueText}>
+                                {currentTafsir.name}
                             </Text>
                             <Ionicons name="chevron-forward" size={20} color={COLORS.textDim} />
                         </View>
@@ -160,6 +206,84 @@ const SettingsScreen = () => {
                                     <Text style={styles.langName}>{item.label}</Text>
                                     <Text style={styles.langNative}>{item.native}</Text>
                                     {settings.translation === item.id &&
+                                        <Ionicons name="checkmark" size={20} color={COLORS.primary} />
+                                    }
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={reciterModalVisible}
+                onRequestClose={() => setReciterModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <View style={styles.modalHeader}>
+                            <Text style={styles.modalTitle}>Select Reciter</Text>
+                            <TouchableOpacity onPress={() => setReciterModalVisible(false)}>
+                                <Ionicons name="close" size={24} color={COLORS.text} />
+                            </TouchableOpacity>
+                        </View>
+                        <FlatList
+                            data={RECITERS}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.langOption,
+                                        settings.reciter === item.id && styles.selectedOption
+                                    ]}
+                                    onPress={() => selectReciter(item.id)}
+                                >
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.langName}>{item.name}</Text>
+                                        <Text style={styles.langNative}>{item.nameArabic}</Text>
+                                    </View>
+                                    {settings.reciter === item.id &&
+                                        <Ionicons name="checkmark" size={20} color={COLORS.primary} />
+                                    }
+                                </TouchableOpacity>
+                            )}
+                        />
+                    </View>
+                </View>
+            </Modal>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={tafsirModalVisible}
+                onRequestClose={() => setTafsirModalVisible(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContent}>
+                        <View style={styles.modalHeader}>
+                            <Text style={styles.modalTitle}>Select Tafsir</Text>
+                            <TouchableOpacity onPress={() => setTafsirModalVisible(false)}>
+                                <Ionicons name="close" size={24} color={COLORS.text} />
+                            </TouchableOpacity>
+                        </View>
+                        <FlatList
+                            data={TAFSIR_EDITIONS}
+                            keyExtractor={item => item.id}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={[
+                                        styles.langOption,
+                                        settings.tafsir === item.id && styles.selectedOption
+                                    ]}
+                                    onPress={() => selectTafsir(item.id)}
+                                >
+                                    <View style={{ flex: 1 }}>
+                                        <Text style={styles.langName}>{item.name}</Text>
+                                        <Text style={styles.langNative}>{item.language}</Text>
+                                    </View>
+                                    {settings.tafsir === item.id &&
                                         <Ionicons name="checkmark" size={20} color={COLORS.primary} />
                                     }
                                 </TouchableOpacity>

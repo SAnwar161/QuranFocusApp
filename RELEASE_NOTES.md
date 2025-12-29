@@ -1,8 +1,41 @@
-# QuranFocus v1.3.0 - Final Release 🚀
+# QuranFocus v1.4.0 - Major Update 🚀
 
 **Assalamu Alaikum!** 🤲
 
-This is the **final stable release** of QuranFocus with all planned features. Here's the complete summary:
+This release adds **Multiple Reciters** and **In-App Tafsir** with 7 editions!
+
+---
+
+## 🆕 What's New in v1.4.0
+
+### 🎙️ Multiple Quran Reciters
+Choose from 5 popular reciters for Tilawat:
+- Mishary Al-Afasy (default)
+- Abdul Rahman Al-Sudais
+- Mahmoud Khalil Al-Husary
+- Mohamed Siddiq Al-Minshawi
+- Ahmed Al-Ajmy
+
+### 📖 In-App Tafsir (7 Editions)
+Read Tafsir directly in the app - no more external links!
+
+**Urdu:**
+- Dr. Israr Ahmed (بیان القرآن) ⭐
+- Ibn Kathir (تفسیر ابن کثیر)
+
+**English:**
+- Maarif ul Quran (Mufti Muhammad Shafi)
+- Ibn Kathir
+- Al-Jalalayn
+
+**Arabic:**
+- Ibn Kathir (تفسير ابن كثير)
+- Al-Qurtubi (تفسير القرطبي)
+
+### ⚙️ New Settings
+- Reciter selection in Settings → Content
+- Tafsir edition selection in Settings → Content
+- Quick switch tafsirs on Tafsir screen
 
 ---
 
@@ -12,15 +45,16 @@ This is the **final stable release** of QuranFocus with all planned features. He
 ✅ Random ayat with Arabic + translation  
 ✅ Auto-rotation (30/60/90/120 seconds)  
 ✅ Search any ayat (e.g., "2:255")  
-✅ Audio recitation (Sheikh Alafasy)  
+✅ **Audio recitation (5 reciters)**  
 ✅ One-tap bookmarking  
 ✅ Share beautiful ayat cards  
 ✅ Smart idle timer (30s auto-start)  
+✅ **In-app Tafsir**
 
 ### 📖 Read Al-Quran
 ✅ All 114 Surahs  
 ✅ Arabic text + multiple translations  
-✅ **Tilawat playback** for each ayat  
+✅ **Tilawat playback** (5 reciters)  
 ✅ **Continuous playback** with 2s gap  
 ✅ **Auto-scroll** during playback  
 ✅ Bookmark system per Surah  
@@ -32,7 +66,8 @@ This is the **final stable release** of QuranFocus with all planned features. He
 ✅ Tap to open Focus Mode  
 
 ### 📘 Tafsir
-✅ Ibn Kathir explanations  
+✅ **7 Tafsir editions** (Urdu, English, Arabic)
+✅ Dr. Israr Ahmed Bayan ul Quran
 ✅ One-tap access from Focus Mode  
 
 ### 📊 Statistics
@@ -40,34 +75,7 @@ This is the **final stable release** of QuranFocus with all planned features. He
 ✅ Focus time tracking  
 ✅ Ayats read counter  
 ✅ Tilawat listened counter  
-✅ Share counter  
-
-### 🎨 Design
-✅ "Midnight & Gold" dark theme  
-✅ Beautiful Arabic typography  
-✅ Responsive for all screen sizes  
-✅ Smooth animations  
-
-### 📱 Onboarding
-✅ 8-slide welcome tour  
-✅ Feature illustrations  
-✅ Shows once for new users  
-
----
-
-## 🆕 What's New in v1.3.0
-
-### New Features
-- 🎧 **Tilawat in Read Mode** - Play audio while reading Surahs
-- 🔄 **Continuous Playback** - Auto-plays next ayat with 2-second gap
-- 📜 **Auto-Scroll** - Screen follows along during playback
-- ✨ **Playing Indicator** - Currently playing ayat highlighted
-
-### Improvements
-- 📱 All screens now scroll on smaller devices
-- ⏹️ Stop button in header during playback
-- 📊 Tilawat counts in "Listened" statistics
-- 🎨 Better audio button states (loading/playing)
+✅ Share counter
 
 ---
 

@@ -3,6 +3,7 @@ import {
     View, Text, StyleSheet, FlatList, TouchableOpacity,
     ScrollView, ActivityIndicator, TextInput
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Audio } from 'expo-av';
 import { Ionicons } from '@expo/vector-icons';
 import { useApp } from '../context/Store';
@@ -16,6 +17,7 @@ import { COLORS, SPACING, FONTS } from '../constants/theme';
 const SURAHS = require('../data/surahs.json');
 
 const ReadScreen = () => {
+    const navigation = useNavigation();
     const { settings, updateStats } = useApp();
     const [view, setView] = useState('list'); // 'list' or 'reading'
     const [selectedSurah, setSelectedSurah] = useState(null);
@@ -67,9 +69,9 @@ const ReadScreen = () => {
 
     const handleSurahSelect = async (surahNumber) => {
         setLoading(true);
-        console.log('Loading Surah:', surahNumber);
+        console.log('Loading Surah:', surahNumber, 'with reciter:', settings.reciter);
         try {
-            const data = await getSurah(surahNumber, settings.translation);
+            const data = await getSurah(surahNumber, settings.translation, settings.reciter);
             setAyats(data.ayahs);
             setSelectedSurah(SURAHS[surahNumber - 1]);
             setView('reading');
@@ -217,6 +219,12 @@ const ReadScreen = () => {
                             isPlaying={playingAyatIndex === index}
                             isLoading={isAudioLoading && playingAyatIndex === index}
                             onPlayPress={() => playAyat(index)}
+                            onTafsirPress={() => navigation.navigate('Tafsir', {
+                                ayat: {
+                                    ...item,
+                                    surah: { number: selectedSurah.number, englishName: selectedSurah.transliteration }
+                                }
+                            })}
                         />
                     )}
                     style={styles.ayatsList}
@@ -293,7 +301,7 @@ const SurahItem = ({ surah, bookmarks, onPress }) => {
     );
 };
 
-const AyatCard = ({ ayat, ayatIndex, surahNumber, bookmarks, onBookmarkToggle, isPlaying, isLoading, onPlayPress }) => {
+const AyatCard = ({ ayat, ayatIndex, surahNumber, bookmarks, onBookmarkToggle, isPlaying, isLoading, onPlayPress, onTafsirPress }) => {
     const bookmarked = bookmarks.some(b => b.surah === surahNumber && b.ayat === ayat.numberInSurah);
 
     return (
@@ -321,6 +329,17 @@ const AyatCard = ({ ayat, ayatIndex, surahNumber, bookmarks, onBookmarkToggle, i
                             )}
                         </TouchableOpacity>
                     )}
+                    {/* Tafsir Button */}
+                    <TouchableOpacity
+                        onPress={onTafsirPress}
+                        style={styles.tafsirButton}
+                    >
+                        <Ionicons
+                            name="book-outline"
+                            size={24}
+                            color={COLORS.accent}
+                        />
+                    </TouchableOpacity>
                     {/* Bookmark Button */}
                     <TouchableOpacity
                         onPress={() => onBookmarkToggle(surahNumber, ayat.numberInSurah)}
@@ -499,6 +518,16 @@ const styles = StyleSheet.create({
     },
     audioButtonPlaying: {
         backgroundColor: COLORS.primary,
+    },
+    tafsirButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: COLORS.bgLight,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: COLORS.accent,
     },
     stopButton: {
         width: 36,

@@ -30,13 +30,16 @@ export const getAyah = async (number, editions = ['quran-simple', 'en.sahih', 'a
     }
 
     try {
+        console.log(`Fetching ayah: ${number} with editions: ${editions.join(',')}`);
         const response = await fetch(`${BASE_URL}/ayah/${number}/editions/${editions.join(',')}`);
         const data = await response.json();
+        console.log('API Response code:', data.code);
         if (data.code === 200) {
             const result = normalizeAyahData(data.data);
             ayahCache.set(cacheKey, result);
             return result;
         }
+        console.error('API returned error:', data.code, data.status);
         throw new Error('Failed to fetch Ayah');
     } catch (error) {
         console.error('API Error:', error);
@@ -44,16 +47,16 @@ export const getAyah = async (number, editions = ['quran-simple', 'en.sahih', 'a
     }
 };
 
-export const getRandomAyah = async (translateTo = 'en.sahih') => {
+export const getRandomAyah = async (translateTo = 'en.sahih', reciter = 'ar.alafasy') => {
     // Total Ayahs in Quran is 6236
     const randomNum = Math.floor(Math.random() * 6236) + 1;
-    return getAyah(randomNum, ['quran-simple', translateTo, 'ar.alafasy']);
+    return getAyah(randomNum, ['quran-simple', translateTo, reciter]);
 };
 
-export const getSurah = async (surahNumber, translateTo = 'en.sahih') => {
+export const getSurah = async (surahNumber, translateTo = 'en.sahih', reciter = 'ar.alafasy') => {
     try {
-        // Include ar.alafasy for audio recitation
-        const response = await fetch(`${BASE_URL}/surah/${surahNumber}/editions/quran-simple,${translateTo},ar.alafasy`);
+        // Include reciter edition for audio recitation
+        const response = await fetch(`${BASE_URL}/surah/${surahNumber}/editions/quran-simple,${translateTo},${reciter}`);
         const data = await response.json();
 
         if (data.code === 200 && Array.isArray(data.data)) {
@@ -106,6 +109,53 @@ export const getTafsir = async (number, edition = 'en.ibnkathir') => {
         }
         return null;
     } catch (error) {
+        return null;
+    }
+};
+
+// New Tafsir API using spa5k/tafsir_api for comprehensive tafsirs
+// Using raw GitHub URL (jsdelivr CDN blocks mobile apps)
+const TAFSIR_API_BASE = 'https://raw.githubusercontent.com/spa5k/tafsir_api/main/tafsir';
+
+export const getTafsirV2 = async (surahNumber, ayahNumber, tafsirSlug = 'ur-tafsir-bayan-ul-quran') => {
+    try {
+        // Ensure numbers are integers
+        const surah = parseInt(surahNumber, 10);
+        const ayah = parseInt(ayahNumber, 10);
+
+        console.log(`Fetching tafsir: ${tafsirSlug}/${surah}.json for ayah ${ayah}`);
+
+        const response = await fetch(`${TAFSIR_API_BASE}/${tafsirSlug}/${surah}.json`);
+
+        // Check if response is OK before parsing
+        if (!response.ok) {
+            console.log('Tafsir API returned:', response.status);
+            return null;
+        }
+
+        const data = await response.json();
+
+        if (data && data.ayahs && data.ayahs.length > 0) {
+            // Find the specific ayah tafsir
+            let ayahTafsir = data.ayahs.find(a => parseInt(a.ayah, 10) === ayah);
+
+            // If not found, some tafsirs combine all - try first entry
+            if (!ayahTafsir) {
+                console.log('Specific ayah not found, using first entry');
+                ayahTafsir = data.ayahs[0];
+            }
+
+            if (ayahTafsir && ayahTafsir.text) {
+                return {
+                    text: ayahTafsir.text,
+                    surah: surah,
+                    ayah: ayah,
+                };
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error('Tafsir API Error:', error);
         return null;
     }
 };
