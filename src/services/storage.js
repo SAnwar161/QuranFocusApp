@@ -119,7 +119,7 @@ export const isBookmarked = async (surahNumber, ayatNumber) => {
 };
 
 // Onboarding - Version-based so it shows after major updates
-const ONBOARDING_VERSION = 'v2'; // Increment to show onboarding again
+const ONBOARDING_VERSION = 'v3_force_update'; // Increment to show onboarding again
 const ONBOARDING_KEY = `@quranfocus_onboarding_${ONBOARDING_VERSION}`;
 
 export const hasSeenOnboarding = async () => {

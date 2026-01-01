@@ -11,12 +11,13 @@ const TafsirScreen = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const { ayat } = route.params;
-    const { settings, setSettings } = useApp();
+    const { settings, setSettings, updateStats } = useApp();
 
     const [loading, setLoading] = useState(true);
     const [tafsir, setTafsir] = useState(null);
     const [error, setError] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const [hasTrackedView, setHasTrackedView] = useState(false);
 
     const currentTafsir = TAFSIR_EDITIONS.find(t => t.id === settings.tafsir) || TAFSIR_EDITIONS[0];
 
@@ -35,6 +36,11 @@ const TafsirScreen = () => {
 
             if (data && data.text) {
                 setTafsir(data.text);
+                // Track tafsir view (only once per screen visit)
+                if (!hasTrackedView) {
+                    updateStats('tafsir');
+                    setHasTrackedView(true);
+                }
             } else {
                 setTafsir(null);
                 setError("Tafsir not available for this Ayat in this edition.");

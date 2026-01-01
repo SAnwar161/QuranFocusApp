@@ -18,7 +18,7 @@ const SURAHS = require('../data/surahs.json');
 
 const ReadScreen = () => {
     const navigation = useNavigation();
-    const { settings, updateStats } = useApp();
+    const { settings, updateStats, trackSurahRead } = useApp();
     const [view, setView] = useState('list'); // 'list' or 'reading'
     const [selectedSurah, setSelectedSurah] = useState(null);
     const [ayats, setAyats] = useState([]);
@@ -75,6 +75,8 @@ const ReadScreen = () => {
             setAyats(data.ayahs);
             setSelectedSurah(SURAHS[surahNumber - 1]);
             setView('reading');
+            // Track surah read for "Most Read Surah" stat
+            if (trackSurahRead) trackSurahRead(surahNumber);
         } catch (error) {
             console.error('Failed to load surah:', error);
         } finally {

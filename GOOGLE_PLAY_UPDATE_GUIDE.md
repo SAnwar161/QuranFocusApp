@@ -1,18 +1,15 @@
 # QuranFocusApp v1.4.0 - Google Play Store Update Guide
 
 ## 📅 Timeline
-- **EAS Build Quota Resets**: January 1st, 2026
-- **Build the App**: January 1st, 2026
-- **Upload to Play Store**: Same day
-- **Google Review**: 2-3 days
+- **Build Date**: January 1st, 2026 (EAS Quota Resets)
+- **Status**: Ready for Build ✅
 
 ---
 
-## 🚀 STEP-BY-STEP GUIDE
+## 🚀 STEP-BY-STEP GUIDE (EAS Method)
 
 ### Step 1: Update Version Number
-
-Before building, update the version in `app.json`:
+Before building, ensure `app.json` is at **1.4.0**:
 
 ```json
 {
@@ -23,110 +20,69 @@ Before building, update the version in `app.json`:
 }
 ```
 
-> ✅ versionCode auto-increments via EAS
-
----
-
-### Step 2: Push to GitHub (Triggers Build)
+### Step 2: Build with EAS
+Run this command in your terminal:
 
 ```bash
 cd c:/Users/sadat/GAG/QuranFocusApp
-git add .
-git commit -m "v1.4.0: Multiple Reciters + In-App Tafsir"
-git push origin main
+eas build --platform android --profile production
 ```
 
-> The build starts automatically! Monitor at:
-> https://github.com/SAnwar161/QuranFocusApp/actions
+> ⏳ **Wait time**: ~10-20 minutes
+> You can monitor progress in the terminal or on expo.dev
 
----
-
-### Step 3: Download AAB File (~15 min wait)
-
-1. Go to: https://github.com/SAnwar161/QuranFocusApp/actions
-2. Click the completed workflow run
-3. Scroll to **Artifacts** section
-4. Click **"android-aab"** to download
-5. Extract the `.aab` file from the zip
-
----
+### Step 3: Download AAB File
+1. Go to: https://expo.dev/accounts/sadat161/projects/quranfocus/builds
+2. Click the completed build
+3. Click **Download** to get the `.aab` file
 
 ### Step 4: Upload to Google Play Console
-
 1. Go to: https://play.google.com/console
-2. Select **QuranFocusApp**
+2. Select **QuranFocus**
 3. Click **Production** (left sidebar)
 4. Click **Create new release** (blue button)
-5. Upload the `.aab` file
-6. Wait for it to process
+5. Upload your new `.aab` file
 
----
+### Step 5: Update Store Listing
+Copy the content from `STORE_LISTING.md` to the Play Console:
+- **Available Reciters**: Mention the 5 new Qaris
+- **Tafsir**: Mention 7 editions
+- **New Features**: Islamic Date, Stats Enhancements
 
-### Step 5: Fill Release Information
+### Step 6: Release Notes
+Paste this into the "Release Notes" section:
 
-**Release Name**: `1.4.0`
-
-**What's new (Copy this):**
 ```
-🎙️ Multiple Reciters - Choose from 5 Qaris!
-📖 In-App Tafsir - 7 editions in Urdu, English & Arabic
-📚 Dr. Israr Ahmed Bayan ul Quran now available!
-⚙️ New Settings for reciter and tafsir selection
+🚀 v1.4.0 Major Update:
+🌍 19+ Languages: Added Bengali, Hindi, Malay, Japanese & more!
+🎙️ Multiple Reciters: Choose from 5 Qaris (Sudais, Husary, etc.)
+📖 In-App Tafsir: 7 editions (Urdu, English, Arabic)
+🌙 Islamic Date: Hijri calendar on home screen
+stats Enhanced Stats: Streak, Weekly Progress, Most Read Surah
+🇵🇰 Country Flag display
 ```
-
----
-
-### Step 6: Review & Rollout
-
-1. Click **Save** (bottom right)
-2. Click **Review release**
-3. Check for any warnings
-4. Click **Start rollout to Production**
-5. Confirm the rollout
 
 ---
 
 ## ✅ CHECKLIST BEFORE SUBMITTING
 
-- [ ] Version updated to 1.4.0 in app.json
-- [ ] All changes committed and pushed
-- [ ] AAB downloaded from GitHub Actions
+- [ ] Version is 1.4.0 in app.json
+- [ ] EAS Secrets set (Groq, HF keys)
+- [ ] Build successful (AES)
 - [ ] AAB uploaded to Play Console
-- [ ] Release notes filled in
-- [ ] No errors/warnings in Play Console
-
----
-
-## 🆕 What's New in v1.4.0 (For Your Reference)
-
-### Multiple Reciters
-- Mishary Al-Afasy (default)
-- Abdul Rahman Al-Sudais
-- Mahmoud Khalil Al-Husary
-- Mohamed Siddiq Al-Minshawi
-- Ahmed Al-Ajmy
-
-### In-App Tafsir (7 Editions)
-**Urdu**: Dr. Israr Ahmed, Ibn Kathir
-**English**: Maarif ul Quran, Ibn Kathir, Al-Jalalayn
-**Arabic**: Ibn Kathir, Al-Qurtubi
+- [ ] Store Listing updated (Description & Screenshots)
+- [ ] Release Notes added
 
 ---
 
 ## 🆘 Troubleshooting
 
 **Build Failed?**
-- Check GitHub Actions logs for errors
-- Ensure secrets are still valid (QF_Actions, GF_QURANFOCUS, HF_QuranFOCUS)
+- Run `npx expo start --clear` locally to check for errors
+- Ensure EAS secrets are set: `eas secret:list`
 
-**AAB Upload Failed?**
-- Ensure versionCode is higher than current production
-- Check file isn't corrupted
+**Upload Failed?**
+- Check if Version Code matches (EAS manages this automatically usually)
+- Ensure you signed the AAB with the correct keystore (EAS handles this)
 
-**Review Rejected?**
-- Read the rejection email carefully
-- Usually minor issues can be fixed quickly
-
----
-
-**Good luck with your release! 🎉**
+**Good luck with the release! 🎉**

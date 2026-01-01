@@ -20,9 +20,9 @@ const slides = [
         iconType: 'material',
         title: 'Welcome to QuranFocus',
         bullets: [
-            '☪️ Your daily companion for Quran reflection',
-            '📱 Beautiful, distraction-free experience',
-            '🤲 Start your spiritual journey today',
+            '☪️ Your daily spiritual companion',
+            '📅 Hijri Date, Moon Phase & Flag',
+            '🤲 Start your habit today',
         ],
     },
     {
@@ -31,9 +31,9 @@ const slides = [
         iconType: 'ionicons',
         title: 'Focus Mode',
         bullets: [
-            '🌙 Random ayats displayed beautifully',
-            '📜 Arabic text with translation side by side',
-            '🧘 Designed for peaceful contemplation',
+            '🌙 Distraction-free random Ayats',
+            '🎧 Audio with 5 Reciters',
+            '🔍 Search any verse (e.g., "2:255")',
         ],
     },
     {
@@ -42,9 +42,9 @@ const slides = [
         iconType: 'ionicons',
         title: 'Smart Timer',
         bullets: [
-            '⏱️ Auto-rotates new ayat every 60 seconds',
-            '💤 Idle for 30s? Auto-starts Focus Mode',
-            '🔄 Never miss your daily reflection',
+            '⏱️ Auto-rotates Ayats (30s - 2m)',
+            '💤 Idle for 30s? Auto-starts Focus',
+            '🔄 Seamless spiritual flow',
         ],
     },
     {
@@ -53,9 +53,9 @@ const slides = [
         iconType: 'ionicons',
         title: 'Read Al-Quran',
         bullets: [
-            '📖 Browse all 114 Surahs',
-            '🌍 Arabic text with multiple translations',
-            '📜 Scroll through complete chapters',
+            '📖 Complete Quran with Tilawat',
+            '📜 Auto-scroll & Continuous Play',
+            '🌍 Multiple Translations',
         ],
     },
     {
@@ -64,8 +64,8 @@ const slides = [
         iconType: 'ionicons',
         title: 'Bookmark Favorites',
         bullets: [
-            '⭐ Save favorites from Focus or Read mode',
-            '🔖 Quick access to bookmarked ayats',
+            '⭐ One-tap save in any mode',
+            '🔖 Organize by Surah',
             '📚 Build your personal collection',
         ],
     },
@@ -75,31 +75,31 @@ const slides = [
         iconType: 'ionicons',
         title: 'Daily Reminders',
         bullets: [
-            '⏰ Set up to 10 daily reminders',
-            '🏷️ Custom labels (Fajr, Dhuhr, etc.)',
-            '📳 Gentle vibration notifications',
+            '⏰ Up to 10 Daily Reminders',
+            '🏷️ Custom Labels (Fajr, Dhuhr...)',
+            '📳 Gentle Vibration Alerts',
         ],
     },
     {
         id: '7',
-        icon: 'headphones',
+        icon: 'library-outline',
         iconType: 'ionicons',
-        title: 'Tafsir & Recitation',
+        title: 'In-App Tafsir',
         bullets: [
-            '🎧 Listen to beautiful recitation',
-            '📘 Read detailed tafsir explanations',
-            '🔊 Immerse in the meaning',
+            '📘 7 Editions (Urdu, English, Arabic)',
+            '🎓 Dr. Israr, Ibn Kathir, Jalalayn',
+            '✨ Instant understanding of Ayats',
         ],
     },
     {
         id: '8',
         icon: 'stats-chart',
         iconType: 'ionicons',
-        title: 'Track & Share',
+        title: 'Track Your Journey',
         bullets: [
-            '📊 Track your weekly progress',
-            '🖼️ Share beautiful ayat cards',
-            '🎯 Stay motivated on your journey',
+            '🔥 Daily Streak & Weekly Stats',
+            '🏆 Track "Most Read Surah"',
+            '🖼️ Share beautiful Ayat cards',
         ],
     },
 ];

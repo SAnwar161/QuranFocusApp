@@ -1,12 +1,12 @@
-# Google Play Store Listing Content
+# Google Play Store Listing Content (v1.4.0)
 
 Use the text below for your store listing. Optimized for SEO and clarity.
 
 ## App Name (30 characters)
-QuranFocus: Daily Quran Companion
+QuranFocus: Daily Quran Habit
 
 ## Short Description (Max 80 characters)
-Daily Quran focus, tilawat, reminders, tafsir & stats. Your spiritual companion.
+Daily Quran focus, 5 reciters, 7 tafsirs, Islamic date & stats. Your spiritual companion.
 
 ---
 
@@ -20,9 +20,26 @@ Whether you have 5 minutes or an hour, QuranFocus ensures every moment spent wit
 
 ---
 
-### ✨ COMPLETE FEATURE LIST
+### ✨ NEW IN VERSION 1.4.0
+
+🌍 **Global Translations (19+ Languages)**
+Now supporting Bengali, Hindi, Indonesian, Malay, Persian, Spanish, French, Chinese, Japanese, and more!
+
+🎙️ **5 World-Renowned Reciters**
+Choose your favorite Qari: Mishary Al-Afasy, Al-Sudais, Al-Husary, Al-Minshawi, or Al-Ajmy.
+
+📖 **In-App Tafsir (7 Editions)**
+Read detailed explanations in Urdu (Dr. Israr, Ibn Kathir), English (Maarif ul Quran, Ibn Kathir, Jalalayn), and Arabic.
+
+🌙 **Islamic Date & Time**
+Beautiful Hijri date display on the home screen, auto-detected for your location.
+
+🔥 **Enhanced Stats**
+Track your Daily Streak, Weekly Progress, and Most Read Surahs to stay motivated!
 
 ---
+
+### 🎯 COMPLETE FEATURE LIST
 
 #### 🌙 FOCUS MODE
 Your personal sanctuary for Quranic reflection.
@@ -30,98 +47,46 @@ Your personal sanctuary for Quranic reflection.
 • **Random Ayat Display** - Discover beautiful verses with Arabic text and translation
 • **Auto-Rotation Timer** - New ayat every 30-120 seconds (customizable)
 • **Search Any Ayat** - Jump to specific verse (e.g., "2:255" for Ayatul Kursi)
-• **Audio Recitation** - Listen to beautiful tilawat by Sheikh Alafasy
+• **Audio Recitation** - Listen to beautiful tilawat by 5 top Qaris
 • **Bookmark Favorites** - Save meaningful ayats with one tap
 • **Smart Idle Timer** - Auto-starts Focus Mode after 30 seconds of inactivity
 • **Share Beautiful Cards** - Generate stunning ayat images for social media
 
----
-
-#### 📖 READ AL-QURAN WITH TILAWAT ⭐
-Complete Quran reading with audio recitation.
+#### 📖 READ AL-QURAN
+Complete Quran reading with audio features.
 
 • **All 114 Surahs** - Browse complete Quran with Arabic text
-• **Multiple Translations** - Urdu (multiple scholars), English, and more
-• **Tilawat Playback** - Play recitation for each ayat while reading
-• **Continuous Mode** - Auto-plays next ayat with 2-second gap
-• **Auto-Scroll** - Screen follows along during recitation
-• **Bookmark System** - Save favorite ayats per Surah
-• **Bookmark Indicators** - See bookmarked count for each Surah
+• **Audio Tilawat** - Play recitation for each ayat while reading
+• **Continuous Playback** - Auto-plays next ayat seamlessly
+• **Auto-Scroll** - Screen follows the reciter
+• **Multi-Language Support** - Translations in 19+ languages including Bengali, Hindi, Urdu & English
+• **Tafsir Access** - Read Tafsir for any ayat instantly
 
----
-
-#### ⏰ SCHEDULED REMINDERS ⭐
+#### ⏰ SCHEDULED REMINDERS
 Never miss your daily Quran time.
 
-• **Up to 10 Daily Reminders** - Set multiple times throughout the day
-• **Custom Labels** - Name each reminder (Fajr, Dhuhr, After Work, Before Sleep)
+• **Up to 10 Daily Reminders** - Set multiple times (Fajr, Dhuhr, etc.)
 • **Gentle Vibration** - Non-intrusive notification alerts
 • **Quick Access** - Tap notification to instantly open Focus Mode
-• **Toggle On/Off** - Enable or disable individual reminders
 
----
+#### 📊 DETAILED STATISTICS
+Track your spiritual journey visually.
 
-#### 📘 TAFSIR (EXEGESIS)
-Understand the deeper meaning of verses.
-
-• **Detailed Explanations** - Access comprehensive tafsir for any verse
-• **Ibn Kathir Tafsir** - Authentic and reliable explanations
-• **Context & Background** - Learn the occasion of revelation
-• **One-Tap Access** - Open tafsir directly from Focus Mode
-
----
-
-#### 🎧 AUDIO RECITATION
-Immerse yourself in beautiful Quranic recitation.
-
-• **High-Quality Audio** - Crystal clear recitation by Sheikh Mishary Alafasy
-• **Play Per Ayat** - Listen to individual verses
-• **Continuous Playback** - Seamless listening experience
-• **Replay Support** - Play any ayat multiple times
-• **Stats Tracking** - Every recitation counted in your weekly stats
-
----
-
-#### 📤 SHARE THE BLESSINGS
-Spread the message of the Quran.
-
-• **Beautiful Ayat Cards** - Stunning images with Arabic + translation
-• **Full Content Capture** - Long ayats captured completely
-• **Social Media Ready** - Perfect for WhatsApp, Facebook, Instagram, X
-• **One-Tap Sharing** - Share directly from Focus Mode
-
----
-
-#### 📊 WEEKLY STATISTICS
-Track your spiritual journey.
-
-• **Visual Progress Charts** - See your weekly engagement
-• **Focus Time Tracking** - Minutes spent in reflection
-• **Ayats Read Counter** - Total verses discovered
-• **Tilawat Counter** - Recitations listened
-• **Share Counter** - Blessings shared with others
+• **Streak Counter** - Build a consistent daily habit 🔥
+• **Weekly Charts** - Compare your progress with last week
+• **Activity Breakdown** - Track ayats read, listened, and shared
+• **Most Read Surah** - See which Surah you connect with most
+• **Tafsir Tracking** - Count your deep study sessions
 • **Privacy First** - All stats stored locally on your device
 
 ---
 
-#### 🎨 BEAUTIFUL DESIGN
-A premium experience for your spiritual journey.
+### 🎨 BEAUTIFUL DESIGN
 
 • **"Midnight & Gold" Theme** - Elegant dark mode design
 • **Arabic Typography** - Beautiful, readable Quranic text
 • **Distraction-Free** - Clean, minimal interface
-• **Responsive Layout** - Works on all screen sizes
-• **Smooth Animations** - Polished user experience
-
----
-
-#### 📱 ONBOARDING EXPERIENCE
-Get started in 30 seconds.
-
-• **8-Slide Welcome Tour** - Learn all features quickly
-• **Beautiful Illustrations** - Engaging visual guide
-• **Skip Anytime** - Jump straight to the app
-• **First-Time Only** - Shows once for new users
+• **Responsiveness** - Works perfectly on all screen sizes
 
 ---
 
@@ -133,15 +98,13 @@ Your spiritual journey is completely private.
 • **No Data Collection** - We collect NOTHING about you
 • **Offline First** - Stats and preferences stored locally only
 • **No Tracking** - No analytics, no ads, no third-party tracking
-• **Your Data, Your Device** - Nothing leaves your phone
 
 ---
 
-### ℹ️ CREDITS & ACKNOWLEDGEMENTS
+### ℹ️ CREDITS
 
-• Powered by **AlQuran Cloud API** for authentic Quranic text
-• Audio recitation by **Sheikh Mishary Rashid Alafasy**
-• Tafsir by **Ibn Kathir** (English translation)
+• Powered by **AlQuran Cloud API** & **Tafsir API**
+• Recitations by world-renowned Qaris
 • Designed with love for the Ummah 💛
 
 ---
@@ -152,42 +115,18 @@ Your spiritual journey is completely private.
 
 ---
 
-## Version 1.3.0 - What's New (for Play Store "What's New" section)
+## What's New (for Play Store Release)
 
-🎧 NEW: Tilawat in Read Mode - Listen while reading Surahs
-🔄 NEW: Continuous playback with auto-scroll
-📱 Improved: All screens scroll on smaller devices
-📊 Updated: Tilawat now counts in listened stats
-⏹️ Added: Stop button for quick audio control
-🎨 Enhanced: Playing ayat highlighted with golden border
+🚀 **Major Update v1.4.0**
 
----
-
-## 📱 Screenshot Captions (Copy-paste to Play Console)
-
-**Screenshot 1 - Home Screen:**
-Your Daily Quran Companion - Elegant interface with all features
-
-**Screenshot 2 - Focus Mode:**
-Focus Mode - Arabic text with Urdu translation, audio & tafsir
-
-**Screenshot 3 - Read with Tilawat:**
-Read Al-Quran with Audio Tilawat - Play recitation for each ayat
-
-**Screenshot 4 - Surah List:**
-Browse All 114 Surahs - With bookmark counts and Arabic names
-
-**Screenshot 5 - Scheduled Reminders:**
-Set Up to 10 Daily Reminders - Custom labels with vibration alerts
-
-**Screenshot 6 - Weekly Stats:**
-Track Your Spiritual Journey - Focus time, ayats read, and more
-
-**Screenshot 7 - Settings:**
-Customize Your Experience - Language, timer, and notification options
+🌍 **19+ Languages**: New translations for Bengali, Hindi, Malay, Japanese, Spanish & more!
+🎙️ **Multiple Reciters**: Now choose from 5 Qaris including Al-Sudais, Al-Husary, and Al-Minshawi!
+📖 **In-App Tafsir**: Read detailed Tafsir in Urdu (Dr. Israr), English, and Arabic directly in the app.
+🌙 **Islamic Date**: Added Hijri date display with moon phase and country flag.
+🔥 **New Stats**: Track your Daily Streak, Weekly Progress, and Most Read Surahs.
+✨ **Improvements**: Better audio controls and UI enhancements.
 
 ---
 
 ## Keywords (for ASO)
-Quran, Quran Focus, Daily Quran, Islamic App, Quran Reading, Tilawat, Quran Audio, Quran Recitation, Tafsir, Quran Translation, Urdu Quran, Muslim App, Islamic Reminder, Quran Timer, Alafasy
-
+Quran, Quran Focus, Daily Quran, Islamic App, Quran Reading, Tilawat, Quran Audio, Tafsir, Dr Israr Ahmed, Quran Translation, Urdu Quran, Muslim App, Islamic Reminder, Hijri Date, Al-Sudais, Alafasy

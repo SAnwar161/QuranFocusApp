@@ -8,6 +8,13 @@ This release adds **Multiple Reciters** and **In-App Tafsir** with 7 editions!
 
 ## 🆕 What's New in v1.4.0
 
+### 🌍 Global Translations (19+ Languages)
+Added support for 10 new major languages:
+- Bengali, Hindi, Portuguese, Japanese
+- Malay, Persian, Italian, Dutch
+- Thai, Korean
+- (Plus existing: English, Urdu, Chinese, etc.)
+
 ### 🎙️ Multiple Quran Reciters
 Choose from 5 popular reciters for Tilawat:
 - Mishary Al-Afasy (default)
@@ -32,10 +39,23 @@ Read Tafsir directly in the app - no more external links!
 - Ibn Kathir (تفسير ابن كثير)
 - Al-Qurtubi (تفسير القرطبي)
 
+### 📅 Islamic Date & Time
+- Hijri Date display on Home screen 🌙
+- Auto-detects your country for accurate dates 🇵🇰
+- Shows moon phase icon
+
+### 📊 Enhanced Stats
+- **Streak Counter**: Track consecutive days! 🔥
+- **Weekly Comparison**: See your progress vs last week 📈
+- **Most Read Surah**: Track your favorite Surah 🏆
+- **Tafsir Tracking**: Count how many tafsirs you read
+- **Total Bookmarks**: View all bookmarks count
+
 ### ⚙️ New Settings
 - Reciter selection in Settings → Content
 - Tafsir edition selection in Settings → Content
 - Quick switch tafsirs on Tafsir screen
+- Reset Stats option
 
 ---
 
